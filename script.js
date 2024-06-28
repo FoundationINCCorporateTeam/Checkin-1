@@ -124,7 +124,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const { error } = await supabaseClient
             .from('movies')
-            .update({ votes: supabaseClient.rpc('increment', { x: 1 }) })
+            .update({ votes: supabaseClient.raw('votes + 1') })
             .eq('id', selectedMovieId);
 
         if (error) {
@@ -135,6 +135,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         voteContainer.style.display = 'none';
         signatureContainer.style.display = 'block';
         resizeCanvas(); // Ensure canvas is correctly sized when displayed
+        loadMovies(); // Reload the movie list to reflect the updated vote count
     }
 
     async function submitSignature() {
@@ -161,6 +162,5 @@ document.addEventListener('DOMContentLoaded', async () => {
         signatureContainer.style.display = 'none';
         signaturePad.clear();
         loadCheckins();
-        loadMovies();
     }
 });

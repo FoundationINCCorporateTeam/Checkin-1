@@ -19,15 +19,15 @@
             <button type="submit">Add Person</button>
         </form>
 
-        <!-- Vote Container -->
-        <div id="vote-container" class="container">
-            <h2>Vote for a Movie</h2>
+        <!-- Select a Movie -->
+        <div id="select-movie-container" class="container hidden">
+            <h2>Select a Movie</h2>
             <div id="movie-list" class="list"></div>
             <button id="submit-vote">Vote</button>
         </div>
 
-        <!-- Signature Container -->
-        <div id="signature-container" class="container">
+        <!-- Sign Here -->
+        <div id="sign-here-container" class="container hidden">
             <h2>Sign Here</h2>
             <div id="signature-pad" class="signature-pad">
                 <canvas></canvas>
@@ -44,7 +44,7 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1.35.0/dist/umd/supabase.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
     <script src="script.js"></script>
 </body>
 </html>

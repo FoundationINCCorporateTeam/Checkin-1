@@ -124,17 +124,19 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     function getX(event) {
+        const rect = signaturePad.getBoundingClientRect();
         if (event.touches && event.touches.length) {
-            return event.touches[0].clientX - signaturePad.offsetLeft;
+            return event.touches[0].clientX - rect.left;
         }
-        return event.clientX - signaturePad.offsetLeft;
+        return event.clientX - rect.left;
     }
 
     function getY(event) {
+        const rect = signaturePad.getBoundingClientRect();
         if (event.touches && event.touches.length) {
-            return event.touches[0].clientY - signaturePad.offsetTop;
+            return event.touches[0].clientY - rect.top;
         }
-        return event.clientY - signaturePad.offsetTop;
+        return event.clientY - rect.top;
     }
 
     function clearSignature() {

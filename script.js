@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const ctx = signaturePad.getContext('2d');
     let drawing = false;
     let currentCheckinId = null;
+    let lastX, lastY;
 
     // Load check-in list from Supabase
     async function loadCheckins() {
@@ -98,15 +99,27 @@ document.addEventListener('DOMContentLoaded', async () => {
     function handleTouchStart(event) {
         drawing = true;
         const touches = event.touches[0];
+        lastX = touches.clientX - signaturePad.offsetLeft;
+        lastY = touches.clientY - signaturePad.offsetTop;
         ctx.beginPath();
-        ctx.moveTo(touches.clientX - signaturePad.offsetLeft, touches.clientY - signaturePad.offsetTop);
+        ctx.moveTo(lastX, lastY);
     }
 
     function handleTouchMove(event) {
+        event.preventDefault();
         if (!drawing) return;
+
         const touches = event.touches[0];
-        ctx.lineTo(touches.clientX - signaturePad.offsetLeft, touches.clientY - signaturePad.offsetTop);
+        const currentX = touches.clientX - signaturePad.offsetLeft;
+        const currentY = touches.clientY - signaturePad.offsetTop;
+
+        ctx.beginPath();
+        ctx.moveTo(lastX, lastY);
+        ctx.lineTo(currentX, currentY);
         ctx.stroke();
+
+        lastX = currentX;
+        lastY = currentY;
     }
 
     function clearSignature() {

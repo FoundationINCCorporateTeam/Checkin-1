@@ -63,13 +63,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         loadCheckins();
     });
 
-    // Signature pad event listeners
-    signaturePad.addEventListener('mousedown', startDrawing);
-    signaturePad.addEventListener('mouseup', stopDrawing);
-    signaturePad.addEventListener('mousemove', drawSignature);
-    signaturePad.addEventListener('touchstart', startDrawing);
-    signaturePad.addEventListener('touchend', stopDrawing);
-    signaturePad.addEventListener('touchmove', drawSignature);
+    // Signature pad event listeners for touch events
+    signaturePad.addEventListener('touchstart', handleTouchStart, false);
+    signaturePad.addEventListener('touchmove', handleTouchMove, false);
     clearSignatureButton.addEventListener('click', clearSignature);
     submitSignatureButton.addEventListener('click', submitSignature);
 
@@ -99,34 +95,18 @@ document.addEventListener('DOMContentLoaded', async () => {
         loadCheckins();
     }
 
-    function startDrawing(event) {
+    function handleTouchStart(event) {
         drawing = true;
-        const rect = signaturePad.getBoundingClientRect();
-        const x = event.clientX - rect.left;
-        const y = event.clientY - rect.top;
+        const touches = event.touches[0];
         ctx.beginPath();
-        ctx.moveTo(x, y);
-        event.preventDefault();
+        ctx.moveTo(touches.clientX - signaturePad.offsetLeft, touches.clientY - signaturePad.offsetTop);
     }
 
-    function stopDrawing() {
-        drawing = false;
-        ctx.beginPath(); // Reset the path to avoid connecting lines
-    }
-
-    function drawSignature(event) {
+    function handleTouchMove(event) {
         if (!drawing) return;
-        const rect = signaturePad.getBoundingClientRect();
-        const x = event.type.startsWith('touch') ? event.touches[0].clientX - rect.left : event.clientX - rect.left;
-        const y = event.type.startsWith('touch') ? event.touches[0].clientY - rect.top : event.clientY - rect.top;
-        ctx.lineWidth = 2;
-        ctx.lineCap = 'round';
-        ctx.strokeStyle = '#000';
-        ctx.lineTo(x, y);
+        const touches = event.touches[0];
+        ctx.lineTo(touches.clientX - signaturePad.offsetLeft, touches.clientY - signaturePad.offsetTop);
         ctx.stroke();
-        ctx.beginPath();
-        ctx.moveTo(x, y);
-        event.preventDefault();
     }
 
     function clearSignature() {

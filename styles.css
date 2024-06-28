@@ -83,6 +83,10 @@ body {
     background-color: #0056b3;
 }
 
+.hidden {
+    display: none;
+}
+
 @media (max-width: 600px) {
     .form {
         flex-direction: column;

@@ -1,103 +1,113 @@
 body {
     font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
     background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
 }
 
 .container {
+    width: 100%;
     max-width: 600px;
-    margin: 20px auto;
     padding: 20px;
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.list {
-    margin-bottom: 15px;
+h1, h2 {
+    text-align: center;
 }
 
-.form {
+.checkin-list {
+    margin-top: 20px;
+}
+
+.checkin-item {
     display: flex;
-    margin-bottom: 15px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
 }
 
-.form input[type="text"] {
-    flex: 1;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+.checkin-item span {
     margin-right: 10px;
 }
 
-.form button {
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
+.add-person-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.add-person-form input[type="text"] {
+    padding: 8px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    flex: 1;
+    max-width: 200px;
+}
+
+.add-person-form button {
+    padding: 8px 16px;
     background-color: #007bff;
     color: #fff;
     border: none;
     border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
 }
 
-.form button:hover {
-    background-color: #0056b3;
+.select-movie-container, .sign-here-container {
+    margin-top: 20px;
+    text-align: center;
 }
 
-.container h2 {
-    font-size: 20px;
-    margin-bottom: 10px;
+.movie-list {
+    margin-top: 10px;
+}
+
+.movie-item {
+    margin-bottom: 5px;
 }
 
 .signature-pad {
     position: relative;
     width: 100%;
-    height: auto;
+    height: 200px; /* Adjust height as needed */
     border: 1px solid #ccc;
     border-radius: 4px;
-    margin-bottom: 15px;
-    padding: 10px;
+    margin-top: 10px;
 }
 
 .signature-pad canvas {
     width: 100%;
-    height: auto;
-    border: 1px solid #ccc;
+    height: 100%;
     border-radius: 4px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+}
+
+.signature-pad div {
+    margin-top: 10px;
 }
 
 .signature-pad button {
-    margin-top: 10px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
+    padding: 8px 16px;
+    margin-right: 10px;
     background-color: #007bff;
     color: #fff;
     border: none;
     border-radius: 4px;
-}
-
-.signature-pad button:hover {
-    background-color: #0056b3;
+    cursor: pointer;
+    font-size: 14px;
 }
 
 .hidden {
     display: none;
-}
-
-@media (max-width: 600px) {
-    .form {
-        flex-direction: column;
-    }
-
-    .form input[type="text"] {
-        margin-right: 0;
-        margin-bottom: 10px;
-    }
-
-    .form button {
-        width: 100%;
-    }
 }

@@ -13,6 +13,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     const signaturePad = new SignaturePad(signaturePadElement);
     let currentCheckinId = null;
 
+    // Ensure the canvas size is correct
+    function resizeCanvas() {
+        const ratio = Math.max(window.devicePixelRatio || 1, 1);
+        signaturePadElement.width = signaturePadElement.offsetWidth * ratio;
+        signaturePadElement.height = signaturePadElement.offsetHeight * ratio;
+        signaturePadElement.getContext('2d').scale(ratio, ratio);
+        signaturePad.clear(); // Otherwise isEmpty() might return incorrect value
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas(); // First call to set the canvas size
+
     // Load check-in list from Supabase
     async function loadCheckins() {
         const { data: people, error } = await supabaseClient
@@ -69,6 +81,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     window.checkIn = function(id) {
         currentCheckinId = id;
         signatureContainer.style.display = 'block';
+        resizeCanvas(); // Ensure canvas is correctly sized when displayed
     };
 
     async function submitSignature() {

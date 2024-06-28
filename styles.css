@@ -1,0 +1,40 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+#app {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+#add-person-form {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+#add-person-form input {
+    flex: 1;
+    padding: 8px;
+    margin-right: 10px;
+}
+
+#checkin-list {
+    margin-bottom: 20px;
+}
+
+.checkin-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+button {
+    margin-left: 10px;
+}
+
+#signature-pad {
+    border: 1px solid #000;
+    margin-bottom: 10px;
+}

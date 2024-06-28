@@ -5,19 +5,13 @@ const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 document.addEventListener('DOMContentLoaded', async () => {
     const checkinList = document.getElementById('checkin-list');
     const signatureContainer = document.getElementById('signature-container');
-    const signaturePad = document.getElementById('signature-pad');
+    const signaturePadElement = document.getElementById('signature-pad');
     const clearSignatureButton = document.getElementById('clear-signature');
     const submitSignatureButton = document.getElementById('submit-signature');
     const addPersonForm = document.getElementById('add-person-form');
     const nameInput = document.getElementById('name');
-    const ctx = signaturePad.getContext('2d');
-    let drawing = false;
+    const signaturePad = new SignaturePad(signaturePadElement);
     let currentCheckinId = null;
-
-    // Calculate the offset of the canvas relative to the viewport
-    const canvasRect = signaturePad.getBoundingClientRect();
-    const offsetX = canvasRect.left;
-    const offsetY = canvasRect.top;
 
     // Load check-in list from Supabase
     async function loadCheckins() {
@@ -68,10 +62,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         loadCheckins();
     });
 
-    // Signature pad event listeners for touch events
-    signaturePad.addEventListener('touchstart', handleTouchStart, false);
-    signaturePad.addEventListener('touchmove', handleTouchMove, false);
-    clearSignatureButton.addEventListener('click', clearSignature);
+    // Signature pad event listeners
+    clearSignatureButton.addEventListener('click', () => signaturePad.clear());
     submitSignatureButton.addEventListener('click', submitSignature);
 
     window.checkIn = function(id) {
@@ -81,6 +73,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     async function submitSignature() {
         if (!currentCheckinId) return;
+
+        if (signaturePad.isEmpty()) {
+            alert("Please provide a signature first.");
+            return;
+        }
 
         const signature = signaturePad.toDataURL();
         const { error } = await supabaseClient
@@ -96,27 +93,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         alert('Checked in successfully!');
         currentCheckinId = null;
         signatureContainer.style.display = 'none';
-        clearSignature();
+        signaturePad.clear();
         loadCheckins();
-    }
-
-    function handleTouchStart(event) {
-        drawing = true;
-        const touches = event.touches[0];
-        ctx.beginPath();
-        ctx.moveTo(touches.clientX - offsetX, touches.clientY - offsetY);
-    }
-
-    function handleTouchMove(event) {
-        event.preventDefault();
-        if (!drawing) return;
-
-        const touches = event.touches[0];
-        ctx.lineTo(touches.clientX - offsetX, touches.clientY - offsetY);
-        ctx.stroke();
-    }
-
-    function clearSignature() {
-        ctx.clearRect(0, 0, signaturePad.width, signaturePad.height);
     }
 });

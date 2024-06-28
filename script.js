@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     let currentCheckinId = null;
     let selectedMovieId = null;
-    let signaturePad = null; // Define signaturePad variable
+    let signaturePad = null;
 
     // Ensure the canvas size is correct
     function resizeCanvas() {
@@ -25,13 +25,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             const ratio = Math.max(window.devicePixelRatio || 1, 1);
             signaturePad.canvas.width = signaturePadElement.offsetWidth * ratio;
             signaturePad.canvas.height = signaturePadElement.offsetHeight * ratio;
-            signaturePad.canvas.getContext('2d').scale(ratio, ratio);
-            signaturePad.clear(); // Otherwise isEmpty() might return incorrect value
+            signaturePad.clear(); // Ensure canvas is correctly sized after each resize
         }
     }
 
     window.addEventListener('resize', resizeCanvas);
-    resizeCanvas(); // First call to set the canvas size
 
     // Load check-in list from Supabase
     async function loadCheckins() {

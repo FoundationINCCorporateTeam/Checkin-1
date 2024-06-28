@@ -4,16 +4,15 @@ const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 document.addEventListener('DOMContentLoaded', async () => {
     const checkinList = document.getElementById('checkin-list');
-    const voteContainer = document.getElementById('vote-container');
+    const addPersonForm = document.getElementById('add-person-form');
+    const nameInput = document.getElementById('name');
+    const selectMovieContainer = document.getElementById('select-movie-container');
+    const signHereContainer = document.getElementById('sign-here-container');
     const movieList = document.getElementById('movie-list');
-    const signatureContainer = document.getElementById('signature-container');
     const signaturePadElement = document.querySelector('#signature-pad canvas');
     const clearSignatureButton = document.getElementById('clear-signature');
     const submitSignatureButton = document.getElementById('submit-signature');
     const submitVoteButton = document.getElementById('submit-vote');
-    const addPersonForm = document.getElementById('add-person-form');
-    const nameInput = document.getElementById('name');
-    const signaturePad = new SignaturePad(signaturePadElement);
     const movieVotesList = document.getElementById('movie-votes-list');
 
     let currentCheckinId = null;
@@ -136,8 +135,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     window.checkIn = function(id) {
         currentCheckinId = id;
-        voteContainer.style.display = 'block';
-        signatureContainer.style.display = 'none';
+        selectMovieContainer.classList.remove('hidden');
+        signHereContainer.classList.add('hidden');
     };
 
     async function submitVote() {
@@ -154,8 +153,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             return;
         }
 
-        voteContainer.style.display = 'none';
-        signatureContainer.style.display = 'block';
+        selectMovieContainer.classList.add('hidden');
+        signHereContainer.classList.remove('hidden');
         resizeCanvas(); // Ensure canvas is correctly sized when displayed
         loadMovies(); // Reload the movie list to reflect the updated vote count
         loadMovieVotes(); // Reload movie votes display
@@ -182,7 +181,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         alert('Checked in successfully!');
         currentCheckinId = null;
-        signatureContainer.style.display = 'none';
+        signHereContainer.classList.add('hidden');
         signaturePad.clear();
         loadCheckins();
     }

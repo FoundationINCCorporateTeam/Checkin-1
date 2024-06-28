@@ -34,9 +34,23 @@ button {
     margin-left: 10px;
 }
 
+#signature-container {
+    display: none;
+}
+
 #signature-pad {
     border: 1px solid #000;
     margin-bottom: 10px;
+}
+
+.signature-pad--body {
+    width: 100%;
+    height: 200px;
+}
+
+.signature-pad--body canvas {
+    width: 100%;
+    height: 100%;
 }
 
 .checked {

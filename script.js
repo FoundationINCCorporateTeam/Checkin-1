@@ -13,7 +13,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     const ctx = signaturePad.getContext('2d');
     let drawing = false;
     let currentCheckinId = null;
-    let lastX, lastY;
+
+    // Calculate the offset of the canvas relative to the viewport
+    const canvasRect = signaturePad.getBoundingClientRect();
+    const offsetX = canvasRect.left;
+    const offsetY = canvasRect.top;
 
     // Load check-in list from Supabase
     async function loadCheckins() {
@@ -99,10 +103,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     function handleTouchStart(event) {
         drawing = true;
         const touches = event.touches[0];
-        lastX = touches.clientX - signaturePad.offsetLeft;
-        lastY = touches.clientY - signaturePad.offsetTop;
         ctx.beginPath();
-        ctx.moveTo(lastX, lastY);
+        ctx.moveTo(touches.clientX - offsetX, touches.clientY - offsetY);
     }
 
     function handleTouchMove(event) {
@@ -110,16 +112,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (!drawing) return;
 
         const touches = event.touches[0];
-        const currentX = touches.clientX - signaturePad.offsetLeft;
-        const currentY = touches.clientY - signaturePad.offsetTop;
-
-        ctx.beginPath();
-        ctx.moveTo(lastX, lastY);
-        ctx.lineTo(currentX, currentY);
+        ctx.lineTo(touches.clientX - offsetX, touches.clientY - offsetY);
         ctx.stroke();
-
-        lastX = currentX;
-        lastY = currentY;
     }
 
     function clearSignature() {

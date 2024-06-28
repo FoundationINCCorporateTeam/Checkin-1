@@ -1,7 +1,12 @@
 body {
     font-family: Arial, sans-serif;
 }
-
+#branding {
+    background-color: black;
+    color: white;
+    margin: 0 auto;
+    padding: 20px
+    font-family: Arial, sans-serif;
 #app {
     max-width: 600px;
     margin: 0 auto;

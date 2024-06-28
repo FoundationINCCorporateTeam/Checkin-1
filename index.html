@@ -7,38 +7,44 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="app">
-        <header>
-            <h1>Check-in System</h1>
-        </header>
-        <main>
-            <form id="add-person-form">
-                <input type="text" id="name" placeholder="Enter name" required>
-                <button type="submit">Add Person</button>
-            </form>
-            <div id="checkin-list"></div>
-            <div id="vote-container" style="display:none;">
-                <h2>Vote for a Movie</h2>
-                <div id="movie-list"></div>
-                <button id="submit-vote">Submit Vote</button>
+    <div class="container">
+        <h1>Check-in System</h1>
+
+        <!-- Check-in List -->
+        <div id="checkin-list" class="list"></div>
+
+        <!-- Add Person Form -->
+        <form id="add-person-form" class="form">
+            <input type="text" id="name" placeholder="Enter name" required>
+            <button type="submit">Add Person</button>
+        </form>
+
+        <!-- Vote Container -->
+        <div id="vote-container" class="container">
+            <h2>Vote for a Movie</h2>
+            <div id="movie-list" class="list"></div>
+            <button id="submit-vote">Vote</button>
+        </div>
+
+        <!-- Signature Container -->
+        <div id="signature-container" class="container">
+            <h2>Sign Here</h2>
+            <div id="signature-pad" class="signature-pad">
+                <canvas></canvas>
+                <button id="clear-signature">Clear</button>
+                <button id="submit-signature">Submit</button>
             </div>
-            <div id="signature-container" style="display:none;">
-                <h2>Signature</h2>
-                <div id="signature-pad" class="signature-pad">
-                    <div id="canvas-wrapper" class="signature-pad--body">
-                        <canvas></canvas>
-                    </div>
-                </div>
-                <button id="clear-signature">Clear Signature</button>
-                <button id="submit-signature">Submit Signature</button>
-            </div>
-        </main>
-        <footer>
-            <p>Software made by MN Code</p>
-        </footer>
+        </div>
+
+        <!-- Movie Votes Display -->
+        <div id="movie-votes" class="container">
+            <h2>Movie Votes</h2>
+            <div id="movie-votes-list"></div>
+        </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1.35.0/dist/umd/supabase.min.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
+    <script src="supabase.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

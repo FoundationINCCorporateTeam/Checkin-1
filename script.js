@@ -2,14 +2,14 @@ const SUPABASE_URL = 'https://dvsoyesscauzsirtjthh.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2c295ZXNzY2F1enNpcnRqdGhoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTQzNTU4NDQsImV4cCI6MjAyOTkzMTg0NH0.3HoGdobfXm7-SJtRSVF7R9kraDNHBFsiEaJunMjwpHk';
 
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-$(document).ready(async function() {
-    const checkinList = $('#checkin-list');
-    const signatureContainer = $('#signature-container');
-    const signaturePad = $('#signature-pad')[0];
-    const clearSignatureButton = $('#clear-signature');
-    const submitSignatureButton = $('#submit-signature');
-    const addPersonForm = $('#add-person-form');
-    const nameInput = $('#name')[0];
+document.addEventListener('DOMContentLoaded', async () => {
+    const checkinList = document.getElementById('checkin-list');
+    const signatureContainer = document.getElementById('signature-container');
+    const signaturePad = document.getElementById('signature-pad');
+    const clearSignatureButton = document.getElementById('clear-signature');
+    const submitSignatureButton = document.getElementById('submit-signature');
+    const addPersonForm = document.getElementById('add-person-form');
+    const nameInput = document.getElementById('name');
     const ctx = signaturePad.getContext('2d');
     let drawing = false;
     let currentCheckinId = null;
@@ -25,23 +25,23 @@ $(document).ready(async function() {
             return;
         }
 
-        checkinList.empty(); // Clear existing list
+        checkinList.innerHTML = ''; // Clear existing list
         // Display the list
         people.forEach(person => {
-            const item = $(`
-                <div class="checkin-item">
-                    <span>${person.name}</span>
-                    ${person.checked_in ? '<span class="checked">&#x2714;</span>' : `<button onclick="checkIn('${person.id}')">Check-in</button>`}
-                </div>
-            `);
-            checkinList.append(item);
+            const item = document.createElement('div');
+            item.className = 'checkin-item';
+            item.innerHTML = `
+                <span>${person.name}</span>
+                ${person.checked_in ? '<span class="checked">&#x2714;</span>' : `<button onclick="checkIn('${person.id}')">Check-in</button>`}
+            `;
+            checkinList.appendChild(item);
         });
     }
 
     loadCheckins();
 
     // Handle adding a new person
-    addPersonForm.on('submit', async function(event) {
+    addPersonForm.addEventListener('submit', async (event) => {
         event.preventDefault();
         const name = nameInput.value.trim();
 
@@ -64,18 +64,18 @@ $(document).ready(async function() {
     });
 
     // Signature pad event listeners
-    $(signaturePad).on('mousedown', startDrawing);
-    $(signaturePad).on('mouseup', stopDrawing);
-    $(signaturePad).on('mousemove', drawSignature);
-    $(signaturePad).on('touchstart', startDrawing);
-    $(signaturePad).on('touchend', stopDrawing);
-    $(signaturePad).on('touchmove', drawSignature);
-    clearSignatureButton.on('click', clearSignature);
-    submitSignatureButton.on('click', submitSignature);
+    signaturePad.addEventListener('mousedown', startDrawing);
+    signaturePad.addEventListener('mouseup', stopDrawing);
+    signaturePad.addEventListener('mousemove', drawSignature);
+    signaturePad.addEventListener('touchstart', startDrawing);
+    signaturePad.addEventListener('touchend', stopDrawing);
+    signaturePad.addEventListener('touchmove', drawSignature);
+    clearSignatureButton.addEventListener('click', clearSignature);
+    submitSignatureButton.addEventListener('click', submitSignature);
 
     window.checkIn = function(id) {
         currentCheckinId = id;
-        signatureContainer.css('display', 'block');
+        signatureContainer.style.display = 'block';
     };
 
     async function submitSignature() {
@@ -94,7 +94,7 @@ $(document).ready(async function() {
 
         alert('Checked in successfully!');
         currentCheckinId = null;
-        signatureContainer.css('display', 'none');
+        signatureContainer.style.display = 'none';
         clearSignature();
         loadCheckins();
     }
@@ -102,8 +102,8 @@ $(document).ready(async function() {
     function startDrawing(event) {
         drawing = true;
         const rect = signaturePad.getBoundingClientRect();
-        const x = event.type === 'touchstart' ? event.originalEvent.touches[0].clientX - rect.left : event.clientX - rect.left;
-        const y = event.type === 'touchstart' ? event.originalEvent.touches[0].clientY - rect.top : event.clientY - rect.top;
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
         ctx.beginPath();
         ctx.moveTo(x, y);
         event.preventDefault();
@@ -117,8 +117,8 @@ $(document).ready(async function() {
     function drawSignature(event) {
         if (!drawing) return;
         const rect = signaturePad.getBoundingClientRect();
-        const x = event.type === 'touchmove' ? event.originalEvent.touches[0].clientX - rect.left : event.clientX - rect.left;
-        const y = event.type === 'touchmove' ? event.originalEvent.touches[0].clientY - rect.top : event.clientY - rect.top;
+        const x = event.type.startsWith('touch') ? event.touches[0].clientX - rect.left : event.clientX - rect.left;
+        const y = event.type.startsWith('touch') ? event.touches[0].clientY - rect.top : event.clientY - rect.top;
         ctx.lineWidth = 2;
         ctx.lineCap = 'round';
         ctx.strokeStyle = '#000';

@@ -14,6 +14,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     const addPersonForm = document.getElementById('add-person-form');
     const nameInput = document.getElementById('name');
     const signaturePad = new SignaturePad(signaturePadElement);
+    const movieVotesList = document.getElementById('movie-votes-list');
+
     let currentCheckinId = null;
     let selectedMovieId = null;
 
@@ -79,8 +81,30 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
+    // Load movie votes
+    async function loadMovieVotes() {
+        const { data: movies, error } = await supabaseClient
+            .from('movies')
+            .select('title, votes');
+
+        if (error) {
+            console.error('Error fetching movie votes:', error);
+            return;
+        }
+
+        movieVotesList.innerHTML = ''; // Clear existing list
+        // Display the list
+        movies.forEach(movie => {
+            const item = document.createElement('div');
+            item.className = 'movie-vote-item';
+            item.textContent = `${movie.title}: ${movie.votes} votes`;
+            movieVotesList.appendChild(item);
+        });
+    }
+
     loadCheckins();
     loadMovies();
+    loadMovieVotes();
 
     // Handle adding a new person
     addPersonForm.addEventListener('submit', async (event) => {
@@ -134,6 +158,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         signatureContainer.style.display = 'block';
         resizeCanvas(); // Ensure canvas is correctly sized when displayed
         loadMovies(); // Reload the movie list to reflect the updated vote count
+        loadMovieVotes(); // Reload movie votes display
     }
 
     async function submitSignature() {

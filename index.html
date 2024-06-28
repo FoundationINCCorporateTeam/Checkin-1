@@ -11,36 +11,35 @@
         <h1>Check-in System</h1>
 
         <!-- Check-in List -->
-        <div id="checkin-list" class="list"></div>
+        <div id="checkin-list" class="checkin-list"></div>
 
         <!-- Add Person Form -->
-        <form id="add-person-form" class="form">
-            <input type="text" id="name" placeholder="Enter name" required>
+        <form id="add-person-form" class="add-person-form">
+            <input type="text" id="name" placeholder="Enter Name" required>
             <button type="submit">Add Person</button>
         </form>
 
-        <!-- Select a Movie -->
-        <div id="select-movie-container" class="container hidden">
+        <!-- Select Movie Container -->
+        <div id="select-movie-container" class="select-movie-container hidden">
             <h2>Select a Movie</h2>
-            <div id="movie-list" class="list"></div>
-            <button id="submit-vote">Vote</button>
+            <div id="movie-list" class="movie-list"></div>
+            <button id="submit-vote">Submit Vote</button>
         </div>
 
-        <!-- Sign Here -->
-        <div id="sign-here-container" class="container hidden">
+        <!-- Sign Here Container -->
+        <div id="sign-here-container" class="sign-here-container hidden">
             <h2>Sign Here</h2>
             <div id="signature-pad" class="signature-pad">
                 <canvas></canvas>
-                <button id="clear-signature">Clear</button>
-                <button id="submit-signature">Submit</button>
+                <div>
+                    <button id="clear-signature">Clear</button>
+                    <button id="submit-signature">Submit Signature</button>
+                </div>
             </div>
         </div>
 
         <!-- Movie Votes Display -->
-        <div id="movie-votes" class="container">
-            <h2>Movie Votes</h2>
-            <div id="movie-votes-list"></div>
-        </div>
+        <div id="movie-votes-list" class="movie-votes-list"></div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>

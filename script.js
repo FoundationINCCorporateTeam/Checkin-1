@@ -116,25 +116,25 @@ document.addEventListener('DOMContentLoaded', async () => {
         signatureContainer.style.display = 'none';
     };
 
-async function submitVote() {
-    if (!selectedMovieId) {
-        alert("Please select a movie.");
-        return;
+    async function submitVote() {
+        if (!selectedMovieId) {
+            alert("Please select a movie.");
+            return;
+        }
+
+        const { error } = await supabaseClient
+            .rpc('increment_votes', { movie_id: selectedMovieId });
+
+        if (error) {
+            console.error('Error voting for movie:', error);
+            return;
+        }
+
+        voteContainer.style.display = 'none';
+        signatureContainer.style.display = 'block';
+        resizeCanvas(); // Ensure canvas is correctly sized when displayed
+        loadMovies(); // Reload the movie list to reflect the updated vote count
     }
-
-    const { error } = await supabaseClient.rpc('increment_votes', { movie_id: selectedMovieId });
-
-    if (error) {
-        console.error('Error voting for movie:', error);
-        return;
-    }
-
-    voteContainer.style.display = 'none';
-    signatureContainer.style.display = 'block';
-    resizeCanvas(); // Ensure canvas is correctly sized when displayed
-    loadMovies(); // Reload the movie list to reflect the updated vote count
-}
-
 
     async function submitSignature() {
         if (!currentCheckinId) return;

@@ -108,6 +108,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     function stopDrawing() {
         drawing = false;
+        ctx.beginPath();  // Reset the path to avoid connecting lines
     }
 
     function drawSignature(event) {

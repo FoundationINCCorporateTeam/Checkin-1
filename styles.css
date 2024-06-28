@@ -1,78 +1,99 @@
 body {
     font-family: Arial, sans-serif;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
 }
 
-#app {
+.container {
     max-width: 600px;
-    margin: 0 auto;
+    margin: 20px auto;
     padding: 20px;
-    flex: 1;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-header {
-    text-align: center;
-    margin-bottom: 20px;
+.list {
+    margin-bottom: 15px;
 }
 
-main {
-    flex: 1;
-}
-
-#add-person-form {
+.form {
     display: flex;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
-#add-person-form input {
+.form input[type="text"] {
     flex: 1;
-    padding: 8px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
     margin-right: 10px;
 }
 
-#checkin-list {
-    margin-bottom: 20px;
+.form button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
 }
 
-.checkin-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.form button:hover {
+    background-color: #0056b3;
+}
+
+.container h2 {
+    font-size: 20px;
     margin-bottom: 10px;
 }
 
-button {
-    margin-left: 10px;
-}
-
-#vote-container, #signature-container {
-    display: none;
-}
-
-#signature-pad {
-    border: 1px solid #000;
-    margin-bottom: 10px;
-}
-
-.signature-pad--body {
-    width: 100%;
-    height: 200px;
+.signature-pad {
     position: relative;
-}
-
-.signature-pad--body canvas {
     width: 100%;
-    height: 100%;
+    height: auto;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    padding: 10px;
 }
 
-.checked {
-    color: green;
-    font-size: 1.5em;
+.signature-pad canvas {
+    width: 100%;
+    height: auto;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
-footer {
-    text-align: center;
-    margin-top: 20px;
+.signature-pad button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+}
+
+.signature-pad button:hover {
+    background-color: #0056b3;
+}
+
+@media (max-width: 600px) {
+    .form {
+        flex-direction: column;
+    }
+
+    .form input[type="text"] {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .form button {
+        width: 100%;
+    }
 }

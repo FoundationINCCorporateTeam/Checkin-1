@@ -64,9 +64,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     // Signature pad event listeners
-    signaturePad.addEventListener('mousedown', () => drawing = true);
-    signaturePad.addEventListener('mouseup', () => drawing = false);
+    signaturePad.addEventListener('mousedown', startDrawing);
+    signaturePad.addEventListener('mouseup', stopDrawing);
     signaturePad.addEventListener('mousemove', drawSignature);
+    signaturePad.addEventListener('touchstart', startDrawing);
+    signaturePad.addEventListener('touchend', stopDrawing);
+    signaturePad.addEventListener('touchmove', drawSignature);
     clearSignatureButton.addEventListener('click', clearSignature);
     submitSignatureButton.addEventListener('click', submitSignature);
 
@@ -96,15 +99,41 @@ document.addEventListener('DOMContentLoaded', async () => {
         loadCheckins();
     }
 
+    function startDrawing(event) {
+        drawing = true;
+        ctx.beginPath();
+        ctx.moveTo(getX(event), getY(event));
+        event.preventDefault();
+    }
+
+    function stopDrawing() {
+        drawing = false;
+    }
+
     function drawSignature(event) {
         if (!drawing) return;
         ctx.lineWidth = 2;
         ctx.lineCap = 'round';
         ctx.strokeStyle = '#000';
-        ctx.lineTo(event.clientX - signaturePad.offsetLeft, event.clientY - signaturePad.offsetTop);
+        ctx.lineTo(getX(event), getY(event));
         ctx.stroke();
         ctx.beginPath();
-        ctx.moveTo(event.clientX - signaturePad.offsetLeft, event.clientY - signaturePad.offsetTop);
+        ctx.moveTo(getX(event), getY(event));
+        event.preventDefault();
+    }
+
+    function getX(event) {
+        if (event.touches && event.touches.length) {
+            return event.touches[0].clientX - signaturePad.offsetLeft;
+        }
+        return event.clientX - signaturePad.offsetLeft;
+    }
+
+    function getY(event) {
+        if (event.touches && event.touches.length) {
+            return event.touches[0].clientY - signaturePad.offsetTop;
+        }
+        return event.clientY - signaturePad.offsetTop;
     }
 
     function clearSignature() {

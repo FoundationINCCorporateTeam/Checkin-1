@@ -1,17 +1,24 @@
 body {
     font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
-#branding {
-    background-color: black;
-    color: white;
-    margin: 0 auto;
-    padding: 20px
-    font-family: Arial, sans-serif;
-    align-text: center;
+
 #app {
     max-width: 600px;
     margin: 0 auto;
     padding: 20px;
+    flex: 1;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+main {
+    flex: 1;
 }
 
 #add-person-form {
@@ -40,7 +47,7 @@ button {
     margin-left: 10px;
 }
 
-#signature-container {
+#vote-container, #signature-container {
     display: none;
 }
 
@@ -63,4 +70,9 @@ button {
 .checked {
     color: green;
     font-size: 1.5em;
+}
+
+footer {
+    text-align: center;
+    margin-top: 20px;
 }

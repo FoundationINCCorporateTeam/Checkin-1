@@ -7,35 +7,38 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="branding">
-        <h3>This Software Was Made by MN Code</h3>
-    </div>
-   <div id="app">
-        <h1>Check-in System</h1>
-        <form id="add-person-form">
-            <input type="text" id="name" placeholder="Enter name" required>
-            <button type="submit">Add Person</button>
-        </form>
-        <div id="checkin-list"></div>
-        <div id="vote-container" style="display:none;">
-            <h2>Vote for a Movie</h2>
-            <div id="movie-list"></div>
-            <button id="submit-vote">Submit Vote</button>
-        </div>
-        <div id="signature-container" style="display:none;">
-            <h2>Signature</h2>
-            <div id="signature-pad" class="signature-pad">
-                <div id="canvas-wrapper" class="signature-pad--body">
-                    <canvas></canvas>
-                </div>
+    <div id="app">
+        <header>
+            <h1>Check-in System</h1>
+        </header>
+        <main>
+            <form id="add-person-form">
+                <input type="text" id="name" placeholder="Enter name" required>
+                <button type="submit">Add Person</button>
+            </form>
+            <div id="checkin-list"></div>
+            <div id="vote-container" style="display:none;">
+                <h2>Vote for a Movie</h2>
+                <div id="movie-list"></div>
+                <button id="submit-vote">Submit Vote</button>
             </div>
-            <button id="clear-signature">Clear Signature</button>
-            <button id="submit-signature">Submit Signature</button>
-        </div>
+            <div id="signature-container" style="display:none;">
+                <h2>Signature</h2>
+                <div id="signature-pad" class="signature-pad">
+                    <div id="canvas-wrapper" class="signature-pad--body">
+                        <canvas></canvas>
+                    </div>
+                </div>
+                <button id="clear-signature">Clear Signature</button>
+                <button id="submit-signature">Submit Signature</button>
+            </div>
+        </main>
+        <footer>
+            <p>Software made by MN Code</p>
+        </footer>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1.35.0/dist/umd/supabase.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
-

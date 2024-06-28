@@ -17,14 +17,17 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     let currentCheckinId = null;
     let selectedMovieId = null;
+    let signaturePad = null; // Define signaturePad variable
 
     // Ensure the canvas size is correct
     function resizeCanvas() {
-        const ratio = Math.max(window.devicePixelRatio || 1, 1);
-        signaturePadElement.width = signaturePadElement.offsetWidth * ratio;
-        signaturePadElement.height = signaturePadElement.offsetHeight * ratio;
-        signaturePadElement.getContext('2d').scale(ratio, ratio);
-        signaturePad.clear(); // Otherwise isEmpty() might return incorrect value
+        if (signaturePad) {
+            const ratio = Math.max(window.devicePixelRatio || 1, 1);
+            signaturePad.canvas.width = signaturePadElement.offsetWidth * ratio;
+            signaturePad.canvas.height = signaturePadElement.offsetHeight * ratio;
+            signaturePad.canvas.getContext('2d').scale(ratio, ratio);
+            signaturePad.clear(); // Otherwise isEmpty() might return incorrect value
+        }
     }
 
     window.addEventListener('resize', resizeCanvas);
@@ -137,6 +140,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         currentCheckinId = id;
         selectMovieContainer.classList.remove('hidden');
         signHereContainer.classList.add('hidden');
+
+        // Initialize SignaturePad when check-in button is clicked
+        if (!signaturePad) {
+            signaturePad = new SignaturePad(signaturePadElement, {
+                backgroundColor: 'rgb(255, 255, 255)',
+                penColor: 'black',
+                onEnd: resizeCanvas // Ensure canvas is correctly sized after each signature
+            });
+            resizeCanvas(); // Call resizeCanvas once to set initial size
+        }
     };
 
     async function submitVote() {

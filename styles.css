@@ -46,6 +46,7 @@ button {
 .signature-pad--body {
     width: 100%;
     height: 200px;
+    position: relative;
 }
 
 .signature-pad--body canvas {

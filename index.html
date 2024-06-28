@@ -9,13 +9,19 @@
 <body>
     <div id="branding">
         <h3>This Software Was Made by MN Code</h3>
-    <div id="app">
-        <h1>Check-in</h1>
+    </div>
+   <div id="app">
+        <h1>Check-in System</h1>
         <form id="add-person-form">
             <input type="text" id="name" placeholder="Enter name" required>
             <button type="submit">Add Person</button>
         </form>
         <div id="checkin-list"></div>
+        <div id="vote-container" style="display:none;">
+            <h2>Vote for a Movie</h2>
+            <div id="movie-list"></div>
+            <button id="submit-vote">Submit Vote</button>
+        </div>
         <div id="signature-container" style="display:none;">
             <h2>Signature</h2>
             <div id="signature-pad" class="signature-pad">
@@ -32,3 +38,4 @@
     <script src="script.js"></script>
 </body>
 </html>
+
